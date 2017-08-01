@@ -1,6 +1,8 @@
 package com.min.hbase;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -10,6 +12,9 @@ import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
+import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.util.Bytes;
 
 public class HbaseOp {
 	static Configuration conf = HBaseConfiguration.create();
@@ -42,7 +47,31 @@ public class HbaseOp {
 			admin.createTable(tableDesc);
 		}
 	}
+
+	// put
+	public static void insert() throws IOException {
+		Connection connection = ConnectionFactory.createConnection(conf);
+		Table table = connection.getTable(TableName.valueOf("students"));
+
+		Put put = new Put(Bytes.toBytes("1"));
+		put.addColumn(Bytes.toBytes("name"), Bytes.toBytes("fristname"), Bytes.toBytes("zhang"));
+		put.addColumn(Bytes.toBytes("name"), Bytes.toBytes("sencondname"), Bytes.toBytes("san"));
+		put.addColumn(Bytes.toBytes("age"), null, Bytes.toBytes(23));
+		Put put2 = new Put(Bytes.toBytes("2"));
+
+		put2.addColumn(Bytes.toBytes("name"), Bytes.toBytes("fristname"), Bytes.toBytes("li"));
+		put2.addColumn(Bytes.toBytes("name"), Bytes.toBytes("sencondname"), Bytes.toBytes("si"));
+		put2.addColumn(Bytes.toBytes("age"), null, Bytes.toBytes(25));
+
+		List<Put> puts = new ArrayList<Put>();
+		puts.add(put);
+		puts.add(put2);
+
+		table.put(puts);
+	}
+
 	public static void main(String[] args) throws IOException {
-		create();
+		//create();
+		insert();
 	}
 }

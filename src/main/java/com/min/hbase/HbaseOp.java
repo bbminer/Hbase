@@ -58,15 +58,15 @@ public class HbaseOp {
 		Connection connection = ConnectionFactory.createConnection(conf);
 		Table table = connection.getTable(TableName.valueOf("students"));
 
-		Put put = new Put(Bytes.toBytes("1"));
-		put.addColumn(Bytes.toBytes("name"), Bytes.toBytes("fristname"), Bytes.toBytes("zhang"));
-		put.addColumn(Bytes.toBytes("name"), Bytes.toBytes("sencondname"), Bytes.toBytes("san"));
-		put.addColumn(Bytes.toBytes("age"), null, Bytes.toBytes(23));
-		Put put2 = new Put(Bytes.toBytes("2"));
+		Put put = new Put(Bytes.toBytes("5"));
+		put.addColumn(Bytes.toBytes("name"), Bytes.toBytes("fristname"), Bytes.toBytes("qqq"));
+		put.addColumn(Bytes.toBytes("name"), Bytes.toBytes("sencondname"), Bytes.toBytes("www"));
+		put.addColumn(Bytes.toBytes("age"), null, Bytes.toBytes("33"));
+		Put put2 = new Put(Bytes.toBytes("6"));
 
-		put2.addColumn(Bytes.toBytes("name"), Bytes.toBytes("fristname"), Bytes.toBytes("li"));
-		put2.addColumn(Bytes.toBytes("name"), Bytes.toBytes("sencondname"), Bytes.toBytes("si"));
-		put2.addColumn(Bytes.toBytes("age"), null, Bytes.toBytes(25));
+		put2.addColumn(Bytes.toBytes("name"), Bytes.toBytes("fristname"), Bytes.toBytes("aaa"));
+		put2.addColumn(Bytes.toBytes("name"), Bytes.toBytes("sencondname"), Bytes.toBytes("sss"));
+		put2.addColumn(Bytes.toBytes("age"), null, Bytes.toBytes("28"));
 
 		List<Put> puts = new ArrayList<Put>();
 		puts.add(put);
@@ -89,7 +89,7 @@ public class HbaseOp {
 		Connection connection = ConnectionFactory.createConnection(conf);
 		Table table = connection.getTable(TableName.valueOf("students"));
 
-		Delete del = new Delete(Bytes.toBytes("1"));
+		Delete del = new Delete(Bytes.toBytes("2"));
 
 		table.delete(del);
 	}
@@ -126,9 +126,9 @@ public class HbaseOp {
 
 	public static void main(String[] args) throws IOException {
 		// create();
-		// insert();
+		insert();
 		// update();
-		// delete();
-		select();
+		 //delete();
+		//select();
 	}
 }

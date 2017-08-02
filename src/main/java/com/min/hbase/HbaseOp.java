@@ -11,11 +11,13 @@ import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 
+//增删改
 public class HbaseOp {
 	static Configuration conf = HBaseConfiguration.create();
 	/*
@@ -70,8 +72,29 @@ public class HbaseOp {
 		table.put(puts);
 	}
 
+	public static void update() throws IOException {
+		Connection connection = ConnectionFactory.createConnection(conf);
+		Table table = connection.getTable(TableName.valueOf("students"));
+
+		Put put = new Put(Bytes.toBytes("1"));
+		put.addColumn(Bytes.toBytes("age"), null, Bytes.toBytes(28));
+		
+		table.put(put);
+	}
+	
+	public static void delete() throws IOException {
+		Connection connection = ConnectionFactory.createConnection(conf);
+		Table table = connection.getTable(TableName.valueOf("students"));
+
+		Delete del = new Delete(Bytes.toBytes("1"));
+		
+		table.delete(del);
+	}
+	
 	public static void main(String[] args) throws IOException {
 		//create();
 		insert();
+		//update();
+		//delete();
 	}
 }

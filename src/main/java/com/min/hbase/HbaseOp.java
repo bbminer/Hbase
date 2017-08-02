@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
@@ -12,8 +13,10 @@ import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Delete;
+import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 
@@ -78,23 +81,54 @@ public class HbaseOp {
 
 		Put put = new Put(Bytes.toBytes("1"));
 		put.addColumn(Bytes.toBytes("age"), null, Bytes.toBytes(28));
-		
+
 		table.put(put);
 	}
-	
+
 	public static void delete() throws IOException {
 		Connection connection = ConnectionFactory.createConnection(conf);
 		Table table = connection.getTable(TableName.valueOf("students"));
 
 		Delete del = new Delete(Bytes.toBytes("1"));
-		
+
 		table.delete(del);
 	}
-	
+
+	public static void select() throws IOException {
+		Connection connection = ConnectionFactory.createConnection(conf);
+		Table table = connection.getTable(TableName.valueOf("students"));
+		List<Get> gets = new ArrayList<Get>();
+
+		gets.add(new Get(Bytes.toBytes("1")));
+		gets.add(new Get(Bytes.toBytes("2")));
+
+		Result[] results = table.get(gets);
+		if (results != null && results.length > 0) {
+			for (Result result : results) {
+				if (!result.isEmpty()) {
+					for (Cell cell : result.listCells()) {
+						// cell:列族、列、值
+						// 列族
+						System.out.print(
+								Bytes.toString(cell.getFamilyArray(), cell.getFamilyOffset(), cell.getFamilyLength()));
+						// 列
+						System.out.print(Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(),
+								cell.getQualifierLength()));
+						// 值
+						System.out.print(
+								Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+					}
+				}
+				System.out.println();
+			}
+		}
+	}
+
 	public static void main(String[] args) throws IOException {
-		//create();
-		insert();
-		//update();
-		//delete();
+		// create();
+		// insert();
+		// update();
+		// delete();
+		select();
 	}
 }

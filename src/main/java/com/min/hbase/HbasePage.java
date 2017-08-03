@@ -33,7 +33,7 @@ public class HbasePage {
 	 * @param num
 	 *            每一页显示多少条数据
 	 * @param lastRowKey
-	 *            上一页的最后一个数据的rowKey
+	 *            数据的rowKey
 	 * @return
 	 * @throws IOException
 	 */

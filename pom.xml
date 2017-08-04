@@ -36,6 +36,13 @@
 			<version>1.2.3</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.apache.phoenix/phoenix-core -->
+		<dependency>
+			<groupId>org.apache.phoenix</groupId>
+			<artifactId>phoenix-core</artifactId>
+			<version>4.8.1-HBase-1.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>jdk.tools</groupId>
 			<artifactId>jdk.tools</artifactId>

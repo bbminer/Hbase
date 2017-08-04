@@ -32,4 +32,20 @@
      <name>hbase.zookeeper.property.clientPort</name>
      <value>2181</value>
   </property>
+  
+     <property>
+     <name>data.tx.snapshot.dir</name>
+     <value>/tmp/tephra/snapshots</value>
+  </property>
+  
+     <property>
+     <name>phoenix.transactions.enabled</name>
+     <value>true</value>
+  </property>
+  
+     <property>
+     <name>data.tx.timeout</name>
+     <value>60</value>
+  </property>
+  
 </configuration>
